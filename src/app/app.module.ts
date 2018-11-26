@@ -1,21 +1,22 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
+import { CoreModule } from './core/core.module';
+import { CharactersModule } from './characters/characters.module';
 
 import { AppComponent } from './app.component';
-import { ListViewComponent } from './list-view/list-view.component';
-import { ListItemComponent } from './list-item/list-item.component';
+
 
 @NgModule({
   declarations: [
-    AppComponent,
-    ListViewComponent,
-    ListItemComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    CoreModule,
+    CharactersModule
   ],
   providers: [],
   bootstrap: [AppComponent]
