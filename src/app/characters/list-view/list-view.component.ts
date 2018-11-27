@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
+
 import { CharService } from '../../core/services/char.service';
+import { CharactersData } from '../../shared/models/charactersData.model';
+
 
 @Component({
   selector: 'sl-list-view',
@@ -9,7 +14,14 @@ import { CharService } from '../../core/services/char.service';
 })
 export class ListViewComponent implements OnInit {
 
-  constructor( private charService: CharService) {}
+  public charactersData$: Observable<CharactersData>;
 
-  ngOnInit() {}
+  constructor(private charService: CharService) {}
+
+  ngOnInit() {
+    this.charactersData$ = this.charService.getCharactersData().pipe(
+      tap(console.log)
+    );
+  }
+
 }
