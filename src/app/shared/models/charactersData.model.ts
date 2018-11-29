@@ -1,6 +1,6 @@
 import { Character } from './character.model';
 
 export interface CharactersData {
-  resultsCount: string;
+  pagesCount: number;
   characters: Character[];
 }

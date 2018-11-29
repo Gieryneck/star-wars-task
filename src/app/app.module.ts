@@ -8,7 +8,6 @@ import { CharactersModule } from './characters/characters.module';
 
 import { AppComponent } from './app.component';
 
-
 @NgModule({
   declarations: [
     AppComponent
