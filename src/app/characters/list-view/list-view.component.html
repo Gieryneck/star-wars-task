@@ -1,20 +1,20 @@
 <h1>List View</h1>
+
+<div class="row">
+  <div class="col-sm-6">
+    <div class="form-group">
+      <label for="searchInput" class="sr-only">Search</label>
+      <input type="text" class="form-control" id="searchInput" placeholder="Search...">
+    </div>
+  </div>
+
+  <div class="col-sm-6 text-sm-right">
+    <a href="#" class="btn btn-primary mb-3">Add New</a>
+  </div>
+</div>   
+
 <div *ngIf="(charactersData$ | async) as data">
-
-  <div class="row">
-    <div class="col-sm-6">
-      <div class="form-group">
-        <label for="searchInput" class="sr-only">Search</label>
-        <input type="text" class="form-control" id="searchInput" placeholder="Search...">
-      </div>
-    </div>
-
-    <div class="col-sm-6 text-sm-right">
-      <a href="#" class="btn btn-primary mb-3">Add New</a>
-    </div>
-  </div>   
-
   <sl-characters-table [characters]="data.characters"></sl-characters-table>
     
-  <sl-table-nav [pagesCount]="data.pagesCount"></sl-table-nav>
+  <sl-table-nav [pagesCount]="data.pagesCount" [currentPage]="currentPage" (pageChange)="handlePageChange($event)"></sl-table-nav>
 </div>

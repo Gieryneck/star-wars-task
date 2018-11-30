@@ -4,32 +4,26 @@
 
     <li 
     class="page-item disabled"
-    [class.disabled]="currentPage === 1"
-    (click)="handlePreviousButton()">
-
-      <span class="page-link">Previous</span>
+    (click)="handlePreviousButton()"
+    [class.disabled]="currentPage === 1">
+      <span class="page-link">Prev</span>
     </li>
 
-   <!--  <li class="page-item active">
-      <span class="page-link">1 <span class="sr-only">(current)</span></span>
-    </li>
-
-    <li class="page-item">
-      <span class="page-link">2</span>
-    </li> -->
-    <li *ngFor="let item of navArray" [class.active]="item === currentPage" class="page-item">
+    <li 
+      *ngFor="let item of navArray"
+      class="page-item"
+      (click)="handlePageButton(item)"
+      [class.active]="item === currentPage">
         <span class="page-link">{{item}}</span>
+        <span *ngIf="item === currentPage" class="sr-only">(current)</span>
     </li>
 
     <li 
       class="page-item"
-      [class.disabled]="currentPage === pagesCount"
-      (click)="handleNextButton()">
-
+      (click)="handleNextButton()"
+      [class.disabled]="currentPage === pagesCount">
       <span class="page-link">Next</span>
     </li> 
-
-   
 
   </ul>
 

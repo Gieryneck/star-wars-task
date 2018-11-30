@@ -11,15 +11,15 @@ import { CharactersData } from '../../shared/models/charactersData.model';
 export class CharService {
 
   private charactersUrl = 'http://localhost:3000/characters/';
-  private readonly resultsPerPage = 1;
+  private readonly resultsPerPage = 10;
 
   constructor(
     private http: HttpClient
   ) { }
 
-  public getCharactersData(): Observable<CharactersData> {
+  getCharactersData(filter: string = '', page: number = 1, limit: string = String(this.resultsPerPage)): Observable<CharactersData> {
     return this.http.get<Character[]>(
-      this.charactersUrl, {observe: 'response', params: this.generateHttpParams()}
+      this.charactersUrl, {observe: 'response', params: this.generateHttpParams(filter, String(page), limit)}
     ).pipe(
       map(res => {
         return {pagesCount: this.calcPagesCount( Number(res.headers.get('X-Total-Count')) ), characters: res.body };
@@ -27,7 +27,7 @@ export class CharService {
     );
   }
 
-  private generateHttpParams(filter: string = '', page: string = '1', limit: string = String(this.resultsPerPage)): HttpParams {
+  private generateHttpParams(filter: string, page: string, limit: string): HttpParams {
     const params = {'q': filter, '_page': page, '_limit': limit};
 
     return new HttpParams({fromObject: params});

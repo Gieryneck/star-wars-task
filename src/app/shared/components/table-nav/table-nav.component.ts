@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'sl-table-nav',
@@ -8,10 +8,10 @@ import { Component, OnInit, Input } from '@angular/core';
 export class TableNavComponent implements OnInit {
 
   @Input() public pagesCount: number;
-  public currentPage = 1;
+  @Input() public currentPage: number;
+  @Output() public pageChange: EventEmitter<number> = new EventEmitter<number>();
   public navArray: number[];
-  private readonly navArrayLength = 6;
-
+  private readonly maxNavArrayLength = 5;
 
   constructor() { }
 
@@ -20,76 +20,46 @@ export class TableNavComponent implements OnInit {
   }
 
   public handleNextButton(): void {
-    if (this.currentPage < this.pagesCount) { this.handleCurrentPageInc(); }
+    if (this.currentPage < this.pagesCount) {
+      this.currentPage++;
+      this.pageChange.emit(this.currentPage);
+      this.generateNavArray();
+    }
   }
 
   public handlePreviousButton(): void {
-    if (this.currentPage > 1) { this.handleCurrentPageDec(); }
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.pageChange.emit(this.currentPage);
+      this.generateNavArray();
+    }
   }
 
-  private handleCurrentPageInc(): void {
-    this.currentPage++;
-    // this.generateNavArray();
-    this.generateNavArray2();
-  }
-
-  private handleCurrentPageDec(): void {
-    this.currentPage--;
-    // this.generateNavArray();
-    this.generateNavArray2();
+  public handlePageButton(page: number): void {
+    this.currentPage = page;
+    this.pageChange.emit(this.currentPage);
+    this.generateNavArray();
   }
 
   private generateNavArray(): void {
+    const base = [];
+    const navArrayLength = this.pagesCount > this.maxNavArrayLength ? this.maxNavArrayLength : this.pagesCount;
+    const distFromArrCenter = Math.floor(navArrayLength / 2);
+    const navArrIsOddModyfier = navArrayLength % 2 === 1 ? 1 : 0;
 
-    const arr = [];
-
-    if (this.currentPage > Math.ceil(this.navArrayLength / 2)) {
-
-      const distFromArrCenter = Math.floor(this.navArrayLength / 2);
-      const arrIsOdd = this.navArrayLength % 2 === 1;
-
-        if (arrIsOdd) {arr.push(this.currentPage); }
-
-        for (
-          let i = arrIsOdd ? 1 : 0;
-          arrIsOdd ? i <= distFromArrCenter : i < distFromArrCenter;
-          i++) {
-
-            const itemRight = this.currentPage + i;
-
-            if (itemRight <= this.pagesCount) {
-              arr.push(itemRight);
-            } else {
-              arr.push(itemRight - this.navArrayLength);
-            }
-
-            const itemLeft = arrIsOdd ? this.currentPage - i : this.currentPage - i - 1;
-            arr.push(itemLeft);
-        }
-
-        arr.sort((x, y) => x - y);
-
-    } else {
-      for (let i = 1; i <= this.navArrayLength; i++) {
-        arr.push(i);
-      }
+    for (let i = 1 - distFromArrCenter; i <= this.pagesCount + distFromArrCenter + 1; i++) {
+      base.push(i);
     }
 
-    this.navArray = arr;
+    const spreadLeft = base.indexOf(this.currentPage - distFromArrCenter);
+    const spreadRight = base.indexOf(this.currentPage + distFromArrCenter + navArrIsOddModyfier);
+
+    const newArray = base.slice(spreadLeft, spreadRight);
+
+    const offRight = newArray[newArray.length - 1] - this.pagesCount > 0 ? newArray[newArray.length - 1] - this.pagesCount : 0;
+    const offLeft = newArray[0] < 1 ? 1 - newArray[0] : 0;
+
+    this.navArray = offRight ? newArray.map(x => x - offRight) : offLeft ?  newArray.map(x => x + offLeft) : newArray;
   }
 
-
-  private generateNavArray2() {
-    const baseArray = [];
-
-    for (let i = 1; i <= this.pagesCount; i++) {
-      baseArray.push(i);
-    }
-
-    const distFromArrCenter = Math.floor(this.navArrayLength / 2);
-    const currentPageIdx = this.currentPage - 1;
-    const newArray = baseArray.slice(currentPageIdx - distFromArrCenter, currentPageIdx + distFromArrCenter + 1);
-    console.log(newArray);
-    this.navArray = newArray;
-  }
 }

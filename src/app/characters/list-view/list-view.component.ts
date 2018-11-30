@@ -15,11 +15,20 @@ import { CharactersData } from '../../shared/models/charactersData.model';
 export class ListViewComponent implements OnInit {
 
   public charactersData$: Observable<CharactersData>;
-
+  public currentPage = 1;
   constructor(private charService: CharService) {}
 
   ngOnInit() {
-    this.charactersData$ = this.charService.getCharactersData().pipe(
+    this.getCharactersData('', 1);
+  }
+
+  public handlePageChange(page: number): void {
+    this.currentPage = page;
+    this.getCharactersData('', page);
+  }
+
+  private getCharactersData(filter: string, page: number): void {
+    this.charactersData$ = this.charService.getCharactersData(filter, page).pipe(
       tap(console.log)
     );
   }
