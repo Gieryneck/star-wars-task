@@ -17,24 +17,24 @@ export class CharService {
     private http: HttpClient
   ) { }
 
-  getCharactersData(filter: string = '', page: number = 1, limit: string = String(this.resultsPerPage)): Observable<CharactersData> {
+  public getCharactersData(filter = '', page = 1, limit = this.resultsPerPage): Observable<CharactersData> {
     return this.http.get<Character[]>(
-      this.charactersUrl, {observe: 'response', params: this.generateHttpParams(filter, String(page), limit)}
+      this.charactersUrl, {observe: 'response', params: this.generateHttpParams(filter, page, limit)}
     ).pipe(
       map(res => {
-        return {pagesCount: this.calcPagesCount( Number(res.headers.get('X-Total-Count')) ), characters: res.body };
+        return {pagesCount: this.calcPagesCount(res.headers.get('X-Total-Count') ), characters: res.body };
       })
     );
   }
 
-  private generateHttpParams(filter: string, page: string, limit: string): HttpParams {
-    const params = {'q': filter, '_page': page, '_limit': limit};
+  private generateHttpParams(filter: string, page: number, limit: number): HttpParams {
+    const params = {'q': filter, '_page': String(page), '_limit': String(limit)};
 
     return new HttpParams({fromObject: params});
   }
 
-  private calcPagesCount(resultsCount: number): number {
-    return Math.ceil(resultsCount / this.resultsPerPage);
+  private calcPagesCount(resultsCount: string): number {
+    return Math.ceil( Number(resultsCount) / this.resultsPerPage);
   }
 
 }

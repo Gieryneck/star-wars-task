@@ -8,9 +8,10 @@ import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 export class TableNavComponent implements OnInit {
 
   @Input() public pagesCount: number;
-  @Input() public currentPage: number;
-  @Output() public pageChange: EventEmitter<number> = new EventEmitter<number>();
+  @Output() public pageChangeEmitter: EventEmitter<number> = new EventEmitter<number>();
+  public currentPage = 1;
   public navArray: number[];
+
   private readonly maxNavArrayLength = 5;
 
   constructor() { }
@@ -21,23 +22,19 @@ export class TableNavComponent implements OnInit {
 
   public handleNextButton(): void {
     if (this.currentPage < this.pagesCount) {
-      this.currentPage++;
-      this.pageChange.emit(this.currentPage);
-      this.generateNavArray();
+      this.handlePageChange(this.currentPage + 1);
     }
   }
 
   public handlePreviousButton(): void {
     if (this.currentPage > 1) {
-      this.currentPage--;
-      this.pageChange.emit(this.currentPage);
-      this.generateNavArray();
+      this.handlePageChange(this.currentPage - 1);
     }
   }
 
-  public handlePageButton(page: number): void {
+  public handlePageChange(page: number): void {
     this.currentPage = page;
-    this.pageChange.emit(this.currentPage);
+    this.pageChangeEmitter.emit(this.currentPage);
     this.generateNavArray();
   }
 

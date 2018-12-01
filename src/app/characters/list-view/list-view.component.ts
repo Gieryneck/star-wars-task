@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
-
 import { CharService } from '../../core/services/char.service';
-import { CharactersData } from '../../shared/models/charactersData.model';
+import { Character } from '../../shared/models/character.model';
 
 
 @Component({
@@ -14,8 +11,8 @@ import { CharactersData } from '../../shared/models/charactersData.model';
 })
 export class ListViewComponent implements OnInit {
 
-  public charactersData$: Observable<CharactersData>;
-  public currentPage = 1;
+  public characters: Character[];
+  public pagesCount: number;
   constructor(private charService: CharService) {}
 
   ngOnInit() {
@@ -23,14 +20,15 @@ export class ListViewComponent implements OnInit {
   }
 
   public handlePageChange(page: number): void {
-    this.currentPage = page;
     this.getCharactersData('', page);
   }
 
   private getCharactersData(filter: string, page: number): void {
-    this.charactersData$ = this.charService.getCharactersData(filter, page).pipe(
-      tap(console.log)
-    );
+    this.charService.getCharactersData(filter, page)
+    .subscribe(data => {
+      this.characters = data.characters;
+      this.pagesCount = data.pagesCount;
+    });
   }
 
 }

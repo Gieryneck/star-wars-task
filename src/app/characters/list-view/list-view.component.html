@@ -13,8 +13,12 @@
   </div>
 </div>   
 
-<div *ngIf="(charactersData$ | async) as data">
-  <sl-characters-table [characters]="data.characters"></sl-characters-table>
-    
-  <sl-table-nav [pagesCount]="data.pagesCount" [currentPage]="currentPage" (pageChange)="handlePageChange($event)"></sl-table-nav>
+<div>
+  <sl-characters-table [characters]="characters"></sl-characters-table>
+
+  <sl-table-nav 
+    *ngIf="pagesCount" 
+    [pagesCount]="pagesCount" 
+    (pageChangeEmitter)="handlePageChange($event)">
+  </sl-table-nav>
 </div>
