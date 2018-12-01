@@ -3,8 +3,8 @@
 <div class="row">
   <div class="col-sm-6">
     <div class="form-group">
-      <label for="searchInput" class="sr-only">Search</label>
-      <input type="text" class="form-control" id="searchInput" placeholder="Search...">
+      <div class="sr-only">Search</div>
+      <sl-filter (filterEmitter)="handleFiltering($event)"></sl-filter>
     </div>
   </div>
 
@@ -18,7 +18,7 @@
 
   <sl-table-nav 
     *ngIf="pagesCount" 
-    [pagesCount]="pagesCount" 
+    [pCount]="pagesCount" 
     (pageChangeEmitter)="handlePageChange($event)">
   </sl-table-nav>
 </div>

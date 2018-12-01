@@ -11,7 +11,7 @@ import { CharactersData } from '../../shared/models/charactersData.model';
 export class CharService {
 
   private charactersUrl = 'http://localhost:3000/characters/';
-  private readonly resultsPerPage = 10;
+  private readonly resultsPerPage = 2;
 
   constructor(
     private http: HttpClient
@@ -29,7 +29,6 @@ export class CharService {
 
   private generateHttpParams(filter: string, page: number, limit: number): HttpParams {
     const params = {'q': filter, '_page': String(page), '_limit': String(limit)};
-
     return new HttpParams({fromObject: params});
   }
 

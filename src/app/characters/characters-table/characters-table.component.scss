@@ -1,4 +1,16 @@
+.characters-table {
+  margin-bottom: 0;
+}
+
 .id-thead {
 	min-width: 50px;
 	text-align: center;
+}
+
+.no-results {
+  background-color: rgb(243, 243, 243);
+  border: 1px solid rgb(222, 226, 230);
+  color: rgb(63, 63, 63);
+  text-align: center;
+  padding: 10px 0;
 }

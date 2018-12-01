@@ -1,0 +1,15 @@
+<div class="filter-wrapper">
+  <input
+    class="form-control"
+    type="text"
+		value="{{filterValue}}"
+		placeholder="Search..."
+		(keyup)="onKeyUp($event.target.value)">
+
+  <button 
+    *ngIf="filterValue"
+    class="clear-filter-button"
+    (click)="handleClear()">
+      x
+  </button>
+</div>

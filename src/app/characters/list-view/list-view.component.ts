@@ -13,17 +13,24 @@ export class ListViewComponent implements OnInit {
 
   public characters: Character[];
   public pagesCount: number;
+  private filteringTerm: string;
+
   constructor(private charService: CharService) {}
 
   ngOnInit() {
-    this.getCharactersData('', 1);
+    this.getCharactersData();
   }
 
   public handlePageChange(page: number): void {
-    this.getCharactersData('', page);
+    this.getCharactersData(this.filteringTerm, page);
   }
 
-  private getCharactersData(filter: string, page: number): void {
+  public handleFiltering(term): void {
+    this.filteringTerm = term;
+    this.getCharactersData(this.filteringTerm);
+  }
+
+  private getCharactersData(filter?: string, page?: number): void {
     this.charService.getCharactersData(filter, page)
     .subscribe(data => {
       this.characters = data.characters;

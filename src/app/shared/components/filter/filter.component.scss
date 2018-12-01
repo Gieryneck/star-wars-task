@@ -1,0 +1,19 @@
+.filter-wrapper {
+	position: relative;
+
+	.clear-filter-button {
+		background: none;
+		border: none;
+		outline: none;
+		font-size: 24px;
+		position: absolute;
+		right: 10px;
+		top: 0px;
+		cursor: pointer;
+		transition: color .4s;
+
+		&:hover, &:active {
+			color: orangered;
+		}
+	}
+}

@@ -1,43 +1,45 @@
-<table class="table table-bordered table-hover">
+<div class="table-responsive">
+  <table class="table table-bordered table-hover characters-table">
 
-  <thead class="thead-light">
-    <tr>
-      <th scope="col">Id</th>
-      <th scope="col" class="w-25">Name</th>
-      <th scope="col" class="w-25">Species</th>
-      <th scope="col">Gender</th>
-      <th scope="col">Homeworld</th>
-      <th scope="col">Actions</th>
-    </tr>
-  </thead>
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col" class="w-25">Name</th>
+        <th scope="col" class="w-25">Species</th>
+        <th scope="col">Gender</th>
+        <th scope="col">Homeworld</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>   
 
-  <tbody *ngIf="characters">
-
-    <tr *ngFor="let char of characters">
-      <th class="id-thead" scope="row">{{char.id}}</th>
-      <td>{{char.name}}</td>
-      <td>{{char.species}}</td>
-      <td>{{char.gender}}</td>
-      <td>{{char.homeworld}}</td>
-      <td>
-        <div 
-          class="btn-group btn-group-sm" 
-          role="group" 
-          aria-label="Actions">
-
-          <button type="button" class="btn btn-secondary">
-            <i class="fa fa-pencil" aria-hidden="true"></i> 
+    <tbody>      
+      <tr *ngFor="let char of characters">
+        <th class="id-thead" scope="row">{{char.id}}</th>
+        <td>{{char.name}}</td>
+        <td>{{char.species}}</td>
+        <td>{{char.gender}}</td>
+        <td>{{char.homeworld}}</td>
+        <td>
+          <div 
+            class="btn-group btn-group-sm" 
+            role="group" 
+            aria-label="Actions">      
+            <button type="button" class="btn btn-secondary">
+              <i class="fa fa-pencil" aria-hidden="true"></i> 
               Edit
-          </button>
-
-          <button type="button" class="btn btn-danger">
-            <i class="fa fa-trash-o" aria-hidden="true"></i> 
+            </button>      
+            <button type="button" class="btn btn-danger">
+              <i class="fa fa-trash-o" aria-hidden="true"></i> 
               Remove
-          </button>
-        </div>
-      </td>
-    </tr>
+            </button>
+          </div>
+        </td>
+      </tr>      
+    </tbody>      
+  </table>
 
-  </tbody>
+  <div *ngIf="characters?.length === 0" class="no-results">
+    No Results Found 
+  </div>
+</div>
 
-</table>

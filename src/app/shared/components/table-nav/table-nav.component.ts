@@ -7,8 +7,12 @@ import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 })
 export class TableNavComponent implements OnInit {
 
-  @Input() public pagesCount: number;
+  @Input() public set pCount(value: number) {
+    this.pagesCount = value;
+    this.generateNavArray();
+  }
   @Output() public pageChangeEmitter: EventEmitter<number> = new EventEmitter<number>();
+  public pagesCount: number;
   public currentPage = 1;
   public navArray: number[];
 
@@ -16,9 +20,7 @@ export class TableNavComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-    this.generateNavArray();
-  }
+  ngOnInit() {}
 
   public handleNextButton(): void {
     if (this.currentPage < this.pagesCount) {
