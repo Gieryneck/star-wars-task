@@ -1,18 +1,14 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, Input, EventEmitter, Output, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'sl-table-nav',
   templateUrl: './table-nav.component.html',
   styleUrls: ['./table-nav.component.scss']
 })
-export class TableNavComponent implements OnInit {
+export class TableNavComponent implements OnInit, OnChanges {
 
-  @Input() public set pCount(value: number) {
-    this.pagesCount = value;
-    this.generateNavArray();
-  }
+  @Input() public pagesCount: number;
   @Output() public pageChangeEmitter: EventEmitter<number> = new EventEmitter<number>();
-  public pagesCount: number;
   public currentPage = 1;
   public navArray: number[];
 
@@ -20,7 +16,16 @@ export class TableNavComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.generateNavArray();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.pagesCount) {
+      this.currentPage = 1;
+      this.generateNavArray();
+    }
+  }
 
   public handleNextButton(): void {
     if (this.currentPage < this.pagesCount) {
@@ -35,6 +40,8 @@ export class TableNavComponent implements OnInit {
   }
 
   public handlePageChange(page: number): void {
+    if (page === this.currentPage) { return; }
+
     this.currentPage = page;
     this.pageChangeEmitter.emit(this.currentPage);
     this.generateNavArray();
@@ -57,7 +64,6 @@ export class TableNavComponent implements OnInit {
 
     const offRight = newArray[newArray.length - 1] - this.pagesCount > 0 ? newArray[newArray.length - 1] - this.pagesCount : 0;
     const offLeft = newArray[0] < 1 ? 1 - newArray[0] : 0;
-
     this.navArray = offRight ? newArray.map(x => x - offRight) : offLeft ?  newArray.map(x => x + offLeft) : newArray;
   }
 

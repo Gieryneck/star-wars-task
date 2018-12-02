@@ -8,8 +8,9 @@
 
   <button 
     *ngIf="filterValue"
-    class="clear-filter-button"
+    class="close clear-filter-button"
+    aria-label="Close"
     (click)="handleClear()">
-      x
+      <span aria-hidden="true">&times;</span>
   </button>
 </div>

@@ -1,14 +1,14 @@
 .filter-wrapper {
-	position: relative;
 
 	.clear-filter-button {
+    position: relative;
 		background: none;
 		border: none;
 		outline: none;
 		font-size: 24px;
 		position: absolute;
-		right: 10px;
-		top: 0px;
+		right: 25px;
+		top: 5px;
 		cursor: pointer;
 		transition: color .4s;
 
