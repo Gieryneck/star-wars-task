@@ -48,23 +48,22 @@ export class TableNavComponent implements OnInit, OnChanges {
   }
 
   private generateNavArray(): void {
-    const base = [];
-    const navArrayLength = this.pagesCount > this.maxNavArrayLength ? this.maxNavArrayLength : this.pagesCount;
-    const distFromArrCenter = Math.floor(navArrayLength / 2);
-    const navArrIsOddModyfier = navArrayLength % 2 === 1 ? 1 : 0;
+    const arrayLength = this.pagesCount > this.maxNavArrayLength ? this.maxNavArrayLength : this.pagesCount;
+    const halfArray = Math.floor(arrayLength / 2);
+    const arrIsOddModyfier = arrayLength % 2 === 1 ? 1 : 0;
 
-    for (let i = 1 - distFromArrCenter; i <= this.pagesCount + distFromArrCenter + 1; i++) {
-      base.push(i);
+    const array = [];
+    for (
+      let i = this.currentPage - halfArray;
+        i < this.currentPage + halfArray + arrIsOddModyfier;
+        i++) {
+      array.push(i);
     }
 
-    const spreadLeft = base.indexOf(this.currentPage - distFromArrCenter);
-    const spreadRight = base.indexOf(this.currentPage + distFromArrCenter + navArrIsOddModyfier);
+    const offLeft = array[0] < 1 ? 1 - array[0] : 0;
+    const offRight = (array[array.length - 1] > this.pagesCount) ? (array[array.length - 1] - this.pagesCount) : 0;
 
-    const newArray = base.slice(spreadLeft, spreadRight);
-
-    const offRight = newArray[newArray.length - 1] - this.pagesCount > 0 ? newArray[newArray.length - 1] - this.pagesCount : 0;
-    const offLeft = newArray[0] < 1 ? 1 - newArray[0] : 0;
-    this.navArray = offRight ? newArray.map(x => x - offRight) : offLeft ?  newArray.map(x => x + offLeft) : newArray;
+    this.navArray = offLeft ? array.map(x => x + offLeft) : offRight ? array.map(x => x - offRight) : array;
   }
 
 }
