@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 
-import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { Character } from '../../shared/models/character.model';
 import { CharactersData } from '../../shared/models/charactersData.model';
@@ -10,7 +10,8 @@ import { CharactersData } from '../../shared/models/charactersData.model';
 @Injectable()
 export class CharService {
 
-  private charactersUrl = 'http://localhost:3000/characters/';
+  private charactersUrl = 'http://localhost:3000/characters';
+  private speciesUrl = 'http://localhost:3000/species';
   private readonly resultsPerPage = 2;
 
   constructor(
@@ -34,6 +35,14 @@ export class CharService {
 
   private calcPagesCount(resultsCount: string): number {
     return Math.ceil( Number(resultsCount) / this.resultsPerPage);
+  }
+
+  public getSpecies(): Observable<string[]> {
+    return this.http.get<string[]>(this.speciesUrl);
+  }
+
+  public addCharacter(character: Character): Observable<Character> {
+    return this.http.post<Character>(this.charactersUrl, character);
   }
 
 }

@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { CharService } from '../../core/services/char.service';
 import { Character } from '../../shared/models/character.model';
 
-
 @Component({
   selector: 'sl-list-view',
   templateUrl: './list-view.component.html',
@@ -25,7 +24,7 @@ export class ListViewComponent implements OnInit {
     this.getCharactersData(this.filteringTerm, page);
   }
 
-  public handleFiltering(term): void {
+  public handleFiltering(term: string): void {
     this.filteringTerm = term;
     this.getCharactersData(this.filteringTerm);
   }

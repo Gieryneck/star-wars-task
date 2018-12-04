@@ -1,0 +1,107 @@
+<form 
+  slFocusFirstInvalidField 
+  class="character-form" 
+  [formGroup]="form" 
+  (ngSubmit)="onSubmit()">
+
+  <h3 class="title">Add new character</h3>
+
+  <div class="form-group">
+    <label for="name">Name
+      <span class="required">*</span>
+    </label>
+    <input
+      type="text"
+      value="{{form.controls.name.value.trim()}}"
+      placeholder="Name"
+      class="form-control"
+      [class.is-invalid]="checkForInvalidField(form.controls.name)"
+      formControlName="name">
+      <div class="invalid-feedback">
+        This field is required.
+      </div>
+  </div>
+
+  <div class="form-group">
+    <label for="species">Species
+      <span class="required">*</span>
+    </label>
+    <select
+      class="form-control select" 
+      [class.is-invalid]="checkForInvalidField(form.controls.species)"
+      formControlName="species">
+
+      <option value="" class="select-placeholder" [disabled]="true">Select species</option>
+      <option *ngFor="let species of species">{{species}}</option>
+    </select>
+    <div class="invalid-feedback">
+      This field is required.
+    </div>
+  </div>
+  
+  <fieldset class="form-group">
+    <legend class="radio-btns-legend">Gender
+      <span class="required">*</span>
+    </legend>
+
+    <div class="radio-btns-wrapper" [class.invalid-custom]="checkForInvalidField(form.controls.gender)">
+
+      <div class="form-check form-check-inline radio-btn">
+        <label class="form-check-label">
+          <input
+            type="radio"
+            value="male"
+            class="form-check-input"
+            formControlName="gender">
+          Male
+        </label>
+      </div>
+    
+      <div class="form-check form-check-inline radio-btn">
+        <label class="form-check-label">
+          <input 
+            type="radio" 
+            value="female"
+            class="form-check-input"
+            formControlName="gender">
+          Female
+        </label>
+      </div>
+
+      <div class="form-check form-check-inline radio-btn">
+        <label class="form-check-label">
+            <input
+              type="radio"
+              value="n/a"
+              class="form-check-input"
+              formControlName="gender">
+            n/a
+        </label>
+      </div>
+
+    </div>
+    <div *ngIf="checkForInvalidField(form.controls.gender)" class="invalid-feedback-custom">
+      This field is required.
+    </div>
+  </fieldset>
+
+  <div class="form-group">
+    <label for="homeworld">Homeworld</label>
+    <input 
+      type="text"
+      placeholder="Homeworld"
+      class="form-control"
+      formControlName="homeworld">
+  </div>
+   
+  <div class="form-footer">
+    <button 
+      #submitBtn 
+      type="submit" 
+      class="btn btn-primary submit-btn" 
+      [disabled]="postReqPending">
+        {{submitBtn.disabled ? 'Sending' : 'Submit'}}
+    </button>
+  </div> 
+
+</form>
