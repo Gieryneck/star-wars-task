@@ -3,7 +3,7 @@
   <ul class="pagination justify-content-end">
 
     <li
-      class="page-item"
+      class="page-item prev-button"
       (click)="handlePreviousButton()"
       [class.disabled]="currentPage === 1">
       <span class="page-link">Prev</span>
@@ -11,7 +11,7 @@
 
     <li 
       *ngFor="let item of navArray"
-      class="page-item"
+      class="page-item number-button"
       (click)="handlePageChange(item)"
       [class.active]="item === currentPage">
         <span class="page-link">{{item}}</span>
@@ -19,7 +19,7 @@
     </li>
 
     <li 
-      class="page-item"
+      class="page-item next-button"
       (click)="handleNextButton()"
       [class.disabled]="currentPage === pagesCount">
       <span class="page-link">Next</span>

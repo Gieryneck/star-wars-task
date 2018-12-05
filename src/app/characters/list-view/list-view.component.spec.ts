@@ -15,8 +15,6 @@ import { ListViewComponent } from './list-view.component';
 import { CharactersTableComponent } from '../characters-table/characters-table.component';
 import { CharacterFormComponent } from '../character-form/character-form.component';
 
-
-
 @Directive({
   // tslint:disable-next-line:directive-selector
   selector: '[routerLink]',
@@ -30,7 +28,8 @@ export class RouterLinkStubDirective {
   }
 }
 
-fdescribe('ListViewComponent', () => {
+
+describe('ListViewComponent', () => {
   let component: ListViewComponent;
   let fixture: ComponentFixture<ListViewComponent>;
   let mockCharService;
@@ -129,7 +128,6 @@ fdescribe('ListViewComponent', () => {
   });
 
   describe('handlePageChange method', () => {
-
     it('should trigger calling service\'s getCharactersData with proper arguments', () => {
       component['filteringTerm'] = 'test-term';
 
@@ -141,7 +139,6 @@ fdescribe('ListViewComponent', () => {
   });
 
   describe('handleFiltering method', () => {
-
     it('should store filter value to some property', () => {
       component.handleFiltering('new-filter-value');
 
