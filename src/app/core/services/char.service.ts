@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -12,7 +12,7 @@ export class CharService {
 
   private charactersUrl = 'http://localhost:3000/characters';
   private speciesUrl = 'http://localhost:3000/species';
-  private readonly resultsPerPage = 2;
+  private readonly resultsPerPage = 10;
 
   constructor(
     private http: HttpClient
